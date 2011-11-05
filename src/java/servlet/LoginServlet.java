@@ -15,7 +15,10 @@ public class LoginServlet extends HttpServlet {
     String password = request.getParameter("password");
     String loginQuery = ("SELECT * from users where userid=" + userid);    
     try{
-    Connection con = DriverManager.getConnection("jdbc:mysql://mydbinstance.cm5mhbqefnwq.us-east-1.rds.amazonaws.com/musicworld", "awsuser", "mypassword");
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://mydbinstance.cm5mhbqefnwq.us-east-1.rds.amazonaws.com/musicworld", 
+        "awsuser", 
+        "mypassword");
         
      Statement stat = (Statement) con.createStatement();
      ResultSet rs = stat.executeQuery(loginQuery);

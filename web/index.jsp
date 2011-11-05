@@ -12,6 +12,8 @@
         
         <p>Please <a href="login_1.jsp">Login!</a></p>
         
+         <p>Please <a href="register.jsp">Register</a></p>
+        
         <% }
            else if ((Boolean)session.getAttribute("loggedin") == true) {
                if (session.getAttribute("name") != null) {
