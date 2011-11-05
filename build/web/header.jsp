@@ -12,7 +12,7 @@
         <title>CrashCourse.in</title>
     </head>
     <body>
-        <span style="background-color: chartreuse; color: black">
+        <span>
         <h1>CrashCourse.in</h1>
         <p> Your location for a crash course in anything! </p>
         </span>
