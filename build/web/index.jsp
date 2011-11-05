@@ -10,7 +10,7 @@
         
         <% if (session.getAttribute("loggedin") == null || !(Boolean)session.getAttribute("loggedin")) { %>
         
-        <p>Please <a href="login.jsp">Login!</a></p>
+        <p>Please <a href="login_1.jsp">Login!</a></p>
         
         <% }
            else if ((Boolean)session.getAttribute("loggedin") == true) {

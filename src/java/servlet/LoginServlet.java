@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 package servlet;
+import java.util.*;
+import java.sql.*;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,28 +13,30 @@ public class LoginServlet extends HttpServlet {
       throws IOException {
     String userid = request.getParameter("userid");
     String password = request.getParameter("password");
-    /*
-     * try{
-     *      if(password.equals("RETRIEVE_DATABASE_PASSWORD(userid)"){
-     * 
-     *                HttpSession session = request.getSession(true);
-     *                session.setAttribute("loggedin", new Boolean(true));
-     *                session.setAttribute("userid", userid);
-     *                session.setAttribute("name", "RETRIEVE_DATABASE_NAME(userid)");
-     *                response.sendRedirect("index.jsp");
-     *      } 
-     * }
-     * catch(Exception e){
-     *      response.sendRedirect("login.jsp");
-     * }
-     */
-    if (userid.equals("smithab") && password.equals("lab07")) {
-      HttpSession session = request.getSession(true);
-      session.setAttribute("loggedin", new Boolean(true));
-      session.setAttribute("userid", userid);
-      response.sendRedirect("index.jsp");
+    String loginQuery = ("SELECT * from users where userid=" + userid);    
+    try{
+    Connection con = DriverManager.getConnection("jdbc:mysql://mydbinstance.cm5mhbqefnwq.us-east-1.rds.amazonaws.com/musicworld", "awsuser", "mypassword");
+        
+     Statement stat = (Statement) con.createStatement();
+     ResultSet rs = stat.executeQuery(loginQuery);
+     while (rs.next()) {
+        if(rs.getString(2).equals(password)){
+            HttpSession session = request.getSession(true);
+            session.setAttribute("loggedin", new Boolean(true));
+            session.setAttribute("userid", userid);
+            session.setAttribute("firstname", rs.getString(3));
+            session.setAttribute("lastname", rs.getString(4));
+            response.sendRedirect("index.jsp");
+        }
+     }
+     response.sendRedirect("register.jsp");
     }
-    else if (userid.equals("catronjc") && password.equals("s476juus")) {
+    catch (Exception e){
+         throw new IOException(e.getMessage());
+       //  response.sendRedirect("index.jsp");
+    }
+    /*
+    if (userid.equals("catronjc") && password.equals("s476juus")) {
       HttpSession session = request.getSession(true);
       session.setAttribute("loggedin", new Boolean(true));
       session.setAttribute("userid", userid);
@@ -42,5 +46,7 @@ public class LoginServlet extends HttpServlet {
     else {
       response.sendRedirect("login.jsp");
     }
+     * 
+     */
   }
 }
